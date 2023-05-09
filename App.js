@@ -5,23 +5,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet, Text, View } from 'react-native';
 import { RegistrationScreen} from './components/Screens/RegistrationScreen/RegistrationScreen'
 import { LoginScreen} from './components/Screens/LoginScreen/LoginScreen'
-
+import { PostsScreen} from './components/Screens/PostsScreen/PostsScreen'
 
 export default function App() {
 
   const MainStack = createStackNavigator();
 
   return (
-   
-
-    <NavigationContainer>
-      <MainStack.Navigator>
-
-                <Stack.Screen name="register" component={RegistrationScreen} />
-                <Stack.Screen name="login" component={LoginScreen} />
-                
-      </MainStack.Navigator>
-    </NavigationContainer>
+   <>
+    <RegistrationScreen />
+      <LoginScreen />
+      <PostsScreen/>
+    </>
  
 
   );
@@ -30,7 +25,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
