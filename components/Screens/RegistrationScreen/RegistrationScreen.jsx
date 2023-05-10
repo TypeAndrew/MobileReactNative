@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
         color: "#f0f8ff",
     },
     text: {   
-        fontFamily: 'Inter-Black',
+        fontFamily: 'Roboto-Regular',
         color: '#212121',
         textAlign: 'center',
 
     },
     header: {   
-        
+        fontFamily: 'Roboto-Regular',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: 30,
@@ -136,7 +136,8 @@ const styles = StyleSheet.create({
         zIndex: 30
      },
    
-     btn: {
+    btn: {
+         fontFamily: 'Roboto-Regular',
         backgroundColor: "#FF6C00",
         borderRadius: 50,
         height: 40,

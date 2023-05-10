@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         
-       
+        fontFamily: 'Roboto-Regular',
         fontStyle: 'normal',
         fontWeight: 500,
         fontSize: 17,
