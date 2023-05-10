@@ -5,13 +5,17 @@ export const PostsScreen = () =>{
 
 
     return (
-    <View style={styles.container}>
+        <View style={styles.container}>
+        <View style={styles.header}>
+            <Text style={styles.headerText}>Publications</Text>        
+        </View>   
         <View style={styles.formx}>
             <View style={styles.AvatarRow}>
                 <View style={styles.AvatarWrapper}>
                     <ImageBackground
                         style={styles.imageAvatar}
-                        source={require("../../../assets/images/loginBG.png")}> 
+                        > 
+                            
                     </ImageBackground> 
                     
                 </View>
@@ -25,7 +29,7 @@ export const PostsScreen = () =>{
             source={require('../../../assets/icons/grid.svg')}/> 
             <ImageBackground
             style={[styles.image,styles.btnAdd]}
-            source={require("../../../assets/icons/Rectangle.svg")}>+</ImageBackground>   
+            source={require("../../../assets/icons/Rectangle.svg")}><Text>+</Text></ImageBackground>   
             <ImageBackground
             style={styles.image}
             source={require("../../../assets/icons/user.svg")}/>       
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     formx: {
     
         width: 375,
-        height: 729,
+        height: 641,
         color: 'black',
         width: 375,
         elevation: 2,
@@ -68,14 +72,44 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 1,
     },
+    header: {
+        
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 375,
+        height: 88,
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: 17,
+        lineHeight: 22,
+        
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.3,
+        shadowRadius: 1,
+    },
+    headerText: {
+        
+       
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: 17,
+        lineHeight: 22,
+        
+
+    },
     imageAvatar: {
       
-      
+   
         width: 60,
         height: 60,
     },
     AvatarWrapper: {
-       
+         backgroundColor: '#F6F6F6',     
+        marginTop: 32,
+        marginLeft: 16,
         color: 'black',
         overflow: 'hidden',
         resizeMode: 'cover',
@@ -90,6 +124,8 @@ const styles = StyleSheet.create({
         margin: (0,0),
     },
     textCentral: {
+        marginTop: 32,
+        marginLeft: 8,
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',

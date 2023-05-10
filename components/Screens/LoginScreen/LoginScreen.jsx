@@ -1,34 +1,65 @@
-import { TextInput, View, Text, ImageBackground, StyleSheet } from "react-native";
+import {
+    TextInput, View, Text, ImageBackground, StyleSheet,
+    TouchableWithoutFeedback, 
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform, } from "react-native";
 import { TouchableOpacity } from "react-native-web";
+import { useState } from "react";
 
 export const LoginScreen = () =>{
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    
+    const inputHandlerEmail = ((text) => {
+        setEmail(text)
+        console.log(text);
+    });
+    const inputHandlerPassword = ((text) => {
+        setPassword(text)
+        console.log(text);
+    });
 
     return (
-    <View style={styles.container}>
-        <ImageBackground
-        style={styles.image}
-        source={require("../../../assets/images/loginBG.png")}> 
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>   
+        <View style={styles.container}>
+            <ImageBackground
+            style={styles.image}
+            source={require("../../../assets/images/loginBG.png")}> 
+        
+            
+            </ImageBackground> 
     
-        
-        </ImageBackground> 
- 
-        <View style={styles.form}>
-            <Text style={[styles.text, styles.header]}>Login</Text>
-            <View style={{ marginTop: 32 }}>
-        
-                <TextInput placeholder="EMAIL" style={styles.input} textAlign={"center"} />
-            </View>
-            <View style={{ marginTop: 16 }}> 
-              
-                <TextInput placeholder="PASSWORD" style={styles.input} textAlign={"center"} />
-            </View>
+            <View style={styles.form}>
+                <Text style={[styles.text, styles.header]}>Login</Text>
+                <View style={{ marginTop: 32 }}>
+                    <KeyboardAvoidingView
+                                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                                >
+                        <TextInput placeholder="EMAIL"
+                            style={styles.input} textAlign={"center"}
+                            value={email}
+                                onChangeText={inputHandlerEmail} />
+                    </KeyboardAvoidingView>        
+                </View>
+                <View style={{ marginTop: 16 }}> 
+                    <KeyboardAvoidingView
+                                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                                >
+                        <TextInput placeholder="PASSWORD"
+                            style={styles.input} textAlign={"center"}
+                            value={password}
+                                onChangeText={inputHandlerPassword} />
+                    </KeyboardAvoidingView>        
+                </View>
 
-                <TouchableOpacity style={styles.btn}>Login</TouchableOpacity>
-                <Text style={styles.text}>no account, register </Text>
-         
+                    <TouchableOpacity style={styles.btn}><Text>Login</Text></TouchableOpacity>
+                    <Text style={styles.text}>no account, register </Text>
+            
+            </View>
         </View>
-    </View>
+    </TouchableWithoutFeedback>         
     )
 }
 
@@ -50,7 +81,8 @@ const styles = StyleSheet.create({
         height: 812,
     },
     input: {   
-         
+        backgroundColor: '#F6F6F6',
+        marginLeft: 16,
         borderWidth: 1,
         borderColor: "#f0f8ff",
         height: '40px',

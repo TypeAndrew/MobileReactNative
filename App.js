@@ -7,9 +7,17 @@ import { normalize } from 'react-native-normalize';
 import { RegistrationScreen} from './components/Screens/RegistrationScreen/RegistrationScreen'
 import { LoginScreen} from './components/Screens/LoginScreen/LoginScreen'
 import { PostsScreen} from './components/Screens/PostsScreen/PostsScreen'
+import { useFonts } from 'expo-font';
 
 export default function App() {
 
+  const [fontsLoaded] = useFonts({
+    'Roboto-Black': require('./assets/fonts/Roboto/Roboto-Black.ttf'),
+  });
+  
+  if (!fontsLoaded) {
+    return null;
+  }
   const MainStack = createStackNavigator();
 
   return (
