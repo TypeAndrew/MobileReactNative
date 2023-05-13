@@ -7,7 +7,7 @@ import {
 
 import { useState } from "react";
 
-export const LoginScreen = () =>{
+export const LoginScreen = ({ navigation }) =>{
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -70,8 +70,11 @@ export const LoginScreen = () =>{
                     </KeyboardAvoidingView>        
                 </View>
 
-                    <TouchableOpacity title="Login" style={styles.btn}><Text>Login</Text></TouchableOpacity>
-                    <Text style={styles.text}>no account, register </Text>
+                    <TouchableOpacity title="Login" style={styles.btn}
+                                      onPress={() => navigation.navigate("Home")}
+                                      ><Text>Login</Text></TouchableOpacity>
+                    <Text style={styles.text}
+                          onPress={() => navigation.navigate("Registration")}>no account, register </Text>
             
             </View>
         </View>

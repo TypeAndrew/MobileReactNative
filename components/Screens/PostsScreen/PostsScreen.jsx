@@ -1,42 +1,139 @@
 import {  View, Text, ImageBackground, StyleSheet } from "react-native";
 //import { TouchableOpacity } from "react-native-web";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
-export const PostsScreen = () =>{
+export const PostsScreen1 = () =>{
 
+   return (
 
-    return (
-        <View style={styles.container}>
+        <>
+         
             <View style={styles.header}>
-                <Text style={styles.headerText}>Publications</Text>        
-            </View>   
-        <View style={styles.formx}>
-            <View style={styles.AvatarRow}>
-                <View style={styles.AvatarWrapper}>
-                    <ImageBackground
-                        style={styles.imageAvatar}
-                        > 
-                            
-                    </ImageBackground> 
+                    <Text style={styles.headerText}>Publications</Text>        
+                </View>   
+            <View style={styles.formx}>
+                <View style={styles.AvatarRow}>
+                    <View style={styles.AvatarWrapper}>
+                        <ImageBackground
+                            style={styles.imageAvatar}
+                            > 
+                                
+                        </ImageBackground> 
+                        
+                    </View>
+                    <View style={styles.textCentral}><Text >user nane</Text><Text >email</Text></View>
                     
-                </View>
-                <View style={styles.textCentral}><Text >user nane</Text><Text >email</Text></View>
-                
-            </View>         
-        </View>
-        <View style={styles.bottomBar}>
-            <ImageBackground
-            style={styles.image}
-            source={require('../../../assets/icons/grid.svg')}/> 
-            <ImageBackground
-            style={[styles.image,styles.btnAdd]}
-            source={require("../../../assets/icons/Rectangle.svg")}><Text>+</Text></ImageBackground>   
-            <ImageBackground
-            style={styles.image}
-            source={require("../../../assets/icons/user.svg")}/>       
-        </View>
-    </View>
+                </View>         
+            </View>
+            <View style={styles.bottomBar}>
+                <ImageBackground
+                style={styles.image}
+                source={require('../../../assets/icons/grid.svg')}/> 
+                <ImageBackground
+                style={[styles.image,styles.btnAdd]}
+                source={require("../../../assets/icons/Rectangle.svg")}><Text>+</Text></ImageBackground>   
+                <ImageBackground
+                style={styles.image}
+                source={require("../../../assets/icons/user.svg")}/>       
+            </View>
+        
+        </>
+
+
     )
 }
+
+function grid() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+       <ImageBackground
+                style={styles.image}
+                source={require('../../../assets/icons/grid.svg')}/> 
+    </View>
+  );
+}
+
+function Rectangle() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ImageBackground
+                style={[styles.image,styles.btnAdd]}
+                source={require("../../../assets/icons/Rectangle.svg")}><Text>+</Text></ImageBackground>   
+         
+    </View>
+  );
+}
+
+function user() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ImageBackground
+                style={styles.image}
+                source={require("../../../assets/icons/user.svg")}/>     
+         
+    </View>
+  );
+}
+
+const Tabs = createBottomTabNavigator();
+
+export const PostsScreen = () => {
+  return (
+    <Tabs.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Profile") {
+            iconName = focused
+              ? "ios-information-circle"
+              : "ios-information-circle-outline";
+          } else if (route.name === "Settings") {
+            iconName = focused ? "ios-list-box" : "ios-list";
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "tomato",
+        inactiveTintColor: "gray",
+      }}
+    >
+        <Tabs.Screen name="grid" component={grid} 
+          options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
+            <ImageBackground
+              source={focused ? require('../../../assets/icons/grid.svg') : require('../../../assets/icons/grid.svg')}
+              style={styles.image}
+            />
+          ),
+        }}/>
+     <Tabs.Screen name="Rectangle" component={Rectangle} 
+          options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
+            <ImageBackground
+              source={focused ? require('../../../assets/icons/Rectangle.svg') : require('../../../assets/icons/Rectangle.svg')}
+              style={[styles.image,styles.btnAdd]}
+            ><Text>+</Text></ImageBackground> 
+          ),
+        }}/>
+     
+    <Tabs.Screen name="user" component={user} 
+          options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => (
+            <ImageBackground
+              source={focused ? require('../../../assets/icons/user.svg') : require('../../../assets/icons/user.svg')}
+              style={styles.image}
+            />
+          ),
+        }} />
+    </Tabs.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
     container: {

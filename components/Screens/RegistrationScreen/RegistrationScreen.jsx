@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 
 import { Avatar } from '../../Avatar/Avatar'
-export const RegistrationScreen = () =>{
+export const RegistrationScreen = ({ navigation }) =>{
     
     const [showPassword, setShowPassword] = useState(false);
 
@@ -84,8 +84,11 @@ export const RegistrationScreen = () =>{
                             </KeyboardAvoidingView>
                 </View>
             
-                    <TouchableOpacity style={styles.btn} title={"Sign in"} ><Text> Sign in</Text></TouchableOpacity>
-                    <Text style={styles.text}>already registered, login </Text>
+                    <TouchableOpacity style={styles.btn} title={"Sign in"}
+                                      onPress={() => navigation.navigate("Home")}
+                                      ><Text> Sign in</Text></TouchableOpacity>
+                    <Text style={styles.text}
+                          onPress={() => navigation.navigate("Login")}>already registered, login </Text>
                 
             </View>
         </View>
