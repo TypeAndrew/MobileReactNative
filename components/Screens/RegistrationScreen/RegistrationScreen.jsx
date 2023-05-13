@@ -8,7 +8,12 @@ import { useState } from "react";
 import { TouchableOpacity } from "react-native-web";
 import { Avatar } from '../../Avatar/Avatar'
 export const RegistrationScreen = () =>{
+    
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }    
     const [login, setlogin] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -61,17 +66,27 @@ export const RegistrationScreen = () =>{
                             onChangeText={inputHandlerEmail} />
                     </KeyboardAvoidingView>    
                 </View>
-                <View style={{ marginTop: 16 }}> 
-                
+                <View style={{ marginTop: 16, position: 'relative' }}> 
+                        <KeyboardAvoidingView
+                                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                                >
                         <TextInput placeholder="PASSWORD"
                             style={styles.input} textAlign={"center"}
+                            secureTextEntry={!showPassword}
                             value={password}
-                            onChangeText={inputHandlerPassword}/>
+                            onChangeText={inputHandlerPassword} />
+                             <View style={styles.CheckBox}>
+   
+                                <TouchableOpacity onPress={togglePasswordVisibility}>
+                                    <Text>{showPassword ? 'hide' : 'show'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </KeyboardAvoidingView>
                 </View>
             
                     <TouchableOpacity style={styles.btn}><Text> Sign in</Text></TouchableOpacity>
                     <Text style={styles.text}>already registered, login </Text>
-            
+                
             </View>
         </View>
     </TouchableWithoutFeedback>         
@@ -85,7 +100,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         
     },
-    
+    CheckBox: {
+         position: 'absolute',
+         flexDirection: 'row',
+         alignItems: 'center', 
+         top: 10,
+         left: 300,
+    },
     image: {
         position: 'absolute',
         flex: 1,

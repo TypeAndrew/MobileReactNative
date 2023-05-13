@@ -2,13 +2,17 @@ import {
     TextInput, View, Text, ImageBackground, StyleSheet,
     TouchableWithoutFeedback, 
     Keyboard,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView, CheckBox,
     Platform, } from "react-native";
 import { TouchableOpacity } from "react-native-web";
 import { useState } from "react";
 
 export const LoginScreen = () =>{
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
@@ -43,14 +47,26 @@ export const LoginScreen = () =>{
                                 onChangeText={inputHandlerEmail} />
                     </KeyboardAvoidingView>        
                 </View>
-                <View style={{ marginTop: 16 }}> 
+                <View style={{ marginTop: 16, position: 'relative' }}> 
                     <KeyboardAvoidingView
                                 behavior={Platform.OS == "ios" ? "padding" : "height"}
-                                >
-                        <TextInput placeholder="PASSWORD"
+                        >
+                    
+                            <TextInput placeholder="PASSWORD"
                             style={styles.input} textAlign={"center"}
-                            value={password}
-                                onChangeText={inputHandlerPassword} />
+                            secureTextEntry={!showPassword}
+                                    value={password}
+                        
+                                onChangeText={inputHandlerPassword} >
+                           
+                            </TextInput>
+                            <View style={styles.CheckBox}>
+   
+                                <TouchableOpacity onPress={togglePasswordVisibility}>
+                                    <Text>{showPassword ? 'hide' : 'show'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                     
                     </KeyboardAvoidingView>        
                 </View>
 
@@ -70,7 +86,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         
     },
-    
+     CheckBox: {
+         position: 'absolute',
+         flexDirection: 'row',
+         alignItems: 'center', 
+         top: 10,
+         left: 300,
+    },
     image: {
         position: 'absolute',
         flex: 1,

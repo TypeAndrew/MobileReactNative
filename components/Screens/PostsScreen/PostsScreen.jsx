@@ -6,9 +6,9 @@ export const PostsScreen = () =>{
 
     return (
         <View style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.headerText}>Publications</Text>        
-        </View>   
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Publications</Text>        
+            </View>   
         <View style={styles.formx}>
             <View style={styles.AvatarRow}>
                 <View style={styles.AvatarWrapper}>
