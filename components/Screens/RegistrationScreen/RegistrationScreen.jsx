@@ -1,11 +1,11 @@
 import {
-    TextInput, View, Text, ImageBackground, StyleSheet,
+    TextInput, View, Text, ImageBackground, StyleSheet, TouchableOpacity,
     TouchableWithoutFeedback, 
     Keyboard,
     KeyboardAvoidingView,
     Platform, } from "react-native";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native-web";
+
 import { Avatar } from '../../Avatar/Avatar'
 export const RegistrationScreen = () =>{
     
@@ -77,14 +77,14 @@ export const RegistrationScreen = () =>{
                             onChangeText={inputHandlerPassword} />
                              <View style={styles.CheckBox}>
    
-                                <TouchableOpacity onPress={togglePasswordVisibility}>
+                                <TouchableOpacity title="show" onPress={togglePasswordVisibility}>
                                     <Text>{showPassword ? 'hide' : 'show'}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </KeyboardAvoidingView>
+                            </KeyboardAvoidingView>
                 </View>
             
-                    <TouchableOpacity style={styles.btn}><Text> Sign in</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.btn} title={"Sign in"} ><Text> Sign in</Text></TouchableOpacity>
                     <Text style={styles.text}>already registered, login </Text>
                 
             </View>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         borderWidth: 1,
         borderColor: "#f0f8ff",
-        height: '40px',
+        height: 40,
    
         color: '#BDBDBD',
         borderColor: 'black'

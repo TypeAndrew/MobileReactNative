@@ -1,10 +1,10 @@
 import {
-    TextInput, View, Text, ImageBackground, StyleSheet,
+    TextInput, View, Text, ImageBackground, StyleSheet, TouchableOpacity,
     TouchableWithoutFeedback, 
     Keyboard,
-    KeyboardAvoidingView, CheckBox,
+    KeyboardAvoidingView, 
     Platform, } from "react-native";
-import { TouchableOpacity } from "react-native-web";
+
 import { useState } from "react";
 
 export const LoginScreen = () =>{
@@ -62,7 +62,7 @@ export const LoginScreen = () =>{
                             </TextInput>
                             <View style={styles.CheckBox}>
    
-                                <TouchableOpacity onPress={togglePasswordVisibility}>
+                                <TouchableOpacity title="show" onPress={togglePasswordVisibility}>
                                     <Text>{showPassword ? 'hide' : 'show'}</Text>
                                 </TouchableOpacity>
                             </View>
@@ -70,7 +70,7 @@ export const LoginScreen = () =>{
                     </KeyboardAvoidingView>        
                 </View>
 
-                    <TouchableOpacity style={styles.btn}><Text>Login</Text></TouchableOpacity>
+                    <TouchableOpacity title="Login" style={styles.btn}><Text>Login</Text></TouchableOpacity>
                     <Text style={styles.text}>no account, register </Text>
             
             </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         borderWidth: 1,
         borderColor: "#f0f8ff",
-        height: '40px',
+        height: 40,
    
         color: '#BDBDBD',
         borderColor: 'black'
