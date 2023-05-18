@@ -1,18 +1,20 @@
 import {  View, Text, ImageBackground, StyleSheet } from "react-native";
 //import { TouchableOpacity } from "react-native-web";
-import  { SvgXml, SvgWithCss } from "react-native-svg";
+import  { SvgXml} from "react-native-svg";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+//import { Ionicons } from "@expo/vector-icons";
+
 
 const xmlUser = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="70" height="40" rx="20" fill={color}/>
         <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21" stroke="#212121" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#212121" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>`;
 
 const xmlRectangle = `<svg width="70" height="40" viewBox="0 0 70 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       
-        <rect width="70" height="40" rx="20" fill="#FF6C00"/>
+        <rect width="70" height="40" rx="20" fill={color}/>
         <text x="35" y="25" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#fff">+</text>
         </svg>
 `;
@@ -70,45 +72,34 @@ const Tabs = createBottomTabNavigator();
 export const PostsScreen = () => {
   return (
     <View style={{ height: 700 }}>
-      <Tabs.Navigator 
-   
-        screenOptions={{ 
-    
-          tabBarStyle: {
-             height: 83, 
-            
-          },
-         
+      <Tabs.Navigator
+      screenOptions={() => ({
+        tabBarIcon: ({ focused, tintColor }) => {
+  
+          let iconName = focused
+          ? xmlRectangle
+          : xmlUser; 
+          const color = focused ? "#FF6C00" : "#FF6C00";
+          const icon = iconName.replace('{color}', color);
+          return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 
-        
-      }}
-     
-      >
+            
+             <SvgXml xml={icon} width="24" height="24" /> 
+                 
+            </View>)
+
+        },
+      })}
+    
+    >
         
       <Tabs.Screen  style={{ height: 400 }} name="Grid" component={Grid} activeTintColor={"tomato"}
-        inactiveTintColor={"gray"}
-          options={{
-          tabBarLabel: 'Grid',
-          tabBarIcon: () => (
-              <SvgXml xml={xmlGrid} width="40" height="40" />
-            ),
-        }}/>
+        />
      <Tabs.Screen name="Rectangle" component={Rectangle} activeTintColor={"tomato"}
-        inactiveTintColor={"gray"}
-          options={{
-          tabBarLabel: 'Rectangle',
-          tabBarIcon: () => (
-          <SvgXml xml={xmlRectangle} width="70" height="40"/>
-         ),
-        }}/>
+      />
      
     <Tabs.Screen name="User" component={User} 
-          options={{
-          tabBarLabel: 'User',
-          tabBarIcon: () => (
-        <SvgXml xml={xmlUser} width="40" height="40" />
-         ),
-        }} />
+         />
       </Tabs.Navigator>
       </View>
   );
