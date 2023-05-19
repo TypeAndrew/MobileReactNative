@@ -1,27 +1,121 @@
+import {  View, Text, ImageBackground, StyleSheet, TouchableWithoutFeedback,Keyboard,
+   } from "react-native";
+//import { TouchableOpacity } from "react-native-web";
+import  { SvgXml} from "react-native-svg";
 
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+//import { Ionicons } from "@expo/vector-icons";
+import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 
-import { xmlUser } from "../../../assets/icons/icons";
+import { xmlUser,xmlGrid,xmlRectangle,xmlHomeLine } from "../../../assets/icons/icons";
+import { Avatar } from '../../Avatar/Avatar'
+               
 
-export function ProfileScreen() {
 
 
+function Grid() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      
-     
-        <ImageBackground 
-                        style={styles.icon}
-                        source={xmlUser}> 
-                        
-        
-        </ImageBackground> 
-    
-    </View> 
-         
-    
+       <ImageBackground
+                style={styles.image}
+                source={require('../../../assets/icons/grid.svg')}/> 
+    </View>
   );
 }
 
+
+
+
+
+const Tabs = createBottomTabNavigator();
+
+export const ProfileScreen = ({ navigation }) => {
+    return (
+       <View>  
+        <View style={styles.container}>
+            <Avatar/>
+      
+            
+            
+          
+        </View>
+        <View style={styles.form}>
+                
+                <View style={{ marginTop: 32 }}></View> 
+        </View> 
+   
+      <Tabs.Navigator 
+        screenOptions={({ route }) => ({
+          tabBarStyle: { height: 83, },
+          tabBarIcon: ({ focused, tintColor }) => {
+  
+          let iconName="";
+          if (route.name === "User") {
+              iconName = xmlUser;
+              focused = true;
+          } else if (route.name === "Rectangle") {
+            iconName = xmlRectangle;
+          } else if (route.name === "Grid") {
+            iconName = xmlGrid;
+          }
+          
+          const color = focused ? "#FF6C00" : "#FFF";
+          const icon = iconName.replace('{color}', color);
+          return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
+
+            
+            <SvgXml xml={icon} width="70" height="40" onPress={() => navigation.navigate("Create")} /> 
+                 
+            </View>)
+
+        },
+      })}
+    
+    >
+      
+        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}/>
+        <Tabs.Screen  name="User" component={ProfileScreen} />  
+        <Tabs.Screen name="Rectangle" component={CreatePostsScreen} />
+     
+        </Tabs.Navigator>
+    
+     </View>           
+  );
+};
+
 const styles = StyleSheet.create({
+
+  container: {
+        position: 'relative',
+        height: 812,
+        backgroundColor: "#fff",
+           zIndex: 20
+
+    },
+
+  
+    image: {
+        position: 'absolute',
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        zIndex: 1,
+        width: 375,
+        height: 812,
+      
+    },
+    
+    form: { 
+        padding: ('auto',16),
+        position: 'absolute',
+        backgroundColor: 'white',
+        borderRadius: 50,
+        paddingTop: 92,
+        width:  375,
+        height: 549,
+        top:   263,
+        left:    0,
+        zIndex: 30
+        
+     },
 })

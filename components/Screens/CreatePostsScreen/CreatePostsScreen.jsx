@@ -6,9 +6,10 @@ import { View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback,
 import { useState } from "react";  
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import  { SvgXml} from "react-native-svg";
-import { xmlPhoto, xmlUser } from "../../../assets/icons/icons";
+import { xmlPhoto, xmlTrash } from "../../../assets/icons/icons";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
-export function CreatePostScreen() {
+
+export function CreatePostsScreen() {
 
     const [name, setName] = useState("");
     const [geodata, setGeodata] = useState("");
@@ -72,10 +73,10 @@ export function CreatePostScreen() {
   
           let iconName="";
   
-          iconName = xmlUser;
+          iconName = xmlTrash;
         
           
-          const color = focused ? "#FF6C00" : "#FFF";
+          const color = focused ? "#F6F6F6" : "#FFF";
           const icon = iconName.replace('{color}', color);
           return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
 
@@ -90,11 +91,13 @@ export function CreatePostScreen() {
     >
       
       
-    <Tabs.Screen  name="User" component={ProfileScreen} />
-     </Tabs.Navigator>
-      </View>   
-            </View> 
-        </TouchableWithoutFeedback>
+            <Tabs.Screen name="Create" component={ProfileScreen} />
+                        
+           
+        </Tabs.Navigator>
+        </View>   
+    </View> 
+    </TouchableWithoutFeedback>
         
   );
 }
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     
     container: {
         position: 'relative',
+        height: 900,
         flex: 1,
         backgroundColor: "#fff",
     },
@@ -148,11 +152,12 @@ const styles = StyleSheet.create({
         border: '1px solid #E8E8E8'
     },
     btn: {
-         fontFamily: 'Roboto-Regular',
+        
+        fontFamily: 'Roboto-Regular',
         backgroundColor: "#FF6C00",
         borderRadius: 50,
         height: 40,
-        marginTop: 40,
+        marginBottom: 200,
         textAlign: 'center',
         paddingTop: 10,
 

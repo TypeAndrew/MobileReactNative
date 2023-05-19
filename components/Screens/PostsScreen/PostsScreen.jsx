@@ -4,7 +4,7 @@ import  { SvgXml} from "react-native-svg";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import { Ionicons } from "@expo/vector-icons";
-import { CreatePostScreen } from "../CreatePostsScreen/CreatePostsScreen";
+import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import { xmlUser,xmlGrid,xmlRectangle,xmlHomeLine } from "../../../assets/icons/icons";
 
@@ -28,7 +28,7 @@ function Grid() {
 
 const Tabs = createBottomTabNavigator();
 
-export const PostsScreen = () => {
+export const PostsScreen = ({ navigation }) => {
   return (
     <View style={styles.container  }>
       <Tabs.Navigator 
@@ -36,13 +36,18 @@ export const PostsScreen = () => {
           tabBarStyle: { height: 83, },
           tabBarIcon: ({ focused, tintColor }) => {
   
-          let iconName="";
+          let iconName = "";
+          let routePath ="";  
           if (route.name === "User") {
             iconName = xmlUser;
+            routePath = "Profile";
           } else if (route.name === "Rectangle") {
             iconName = xmlRectangle;
+            routePath = "Create";
+            focused = true;
           } else if (route.name === "Grid") {
             iconName = xmlGrid;
+            
           }
           
           const color = focused ? "#FF6C00" : "#FFF";
@@ -50,7 +55,7 @@ export const PostsScreen = () => {
           return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
 
             
-             <SvgXml xml={icon} width="70" height="40" /> 
+            <SvgXml xml={icon} width="70" height="40" onPress={() => navigation.navigate(routePath)} /> 
                  
             </View>)
 
@@ -59,11 +64,12 @@ export const PostsScreen = () => {
     
     >
       
-      <Tabs.Screen   name="Grid" component={Grid} activeTintColor={"tomato"}
+        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}
+          
         />
           
-     <Tabs.Screen  name="Rectangle" component={CreatePostScreen} activeTintColor={"tomato"}
-      />
+        <Tabs.Screen name="Rectangle" component={CreatePostsScreen} 
+        />
      
         <Tabs.Screen  name="User" component={ProfileScreen} />
        

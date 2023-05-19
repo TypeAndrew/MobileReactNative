@@ -7,8 +7,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { normalize } from 'react-native-normalize';
 import { RegistrationScreen} from './components/Screens/RegistrationScreen/RegistrationScreen'
 import { LoginScreen} from './components/Screens/LoginScreen/LoginScreen'
-import { PostsScreen} from './components/Screens/PostsScreen/PostsScreen'
+import { PostsScreen } from './components/Screens/PostsScreen/PostsScreen'
+import { CreatePostsScreen } from './components/Screens/CreatePostsScreen/CreatePostsScreen';
+import { ProfileScreen } from './components/Screens/ProfileScreen/ProfileScreen';
 import { useFonts } from 'expo-font';
+
 
 export default function App() {
 
@@ -27,7 +30,9 @@ export default function App() {
       <MainStack.Navigator initialRouteName="Registration">
         <MainStack.Screen name="Registration" component={RegistrationScreen} />{/* Аналог Route */}
         <MainStack.Screen name="Login" component={LoginScreen} />
-        <MainStack.Screen name="Home" component={PostsScreen} />
+          <MainStack.Screen name="Home" component={PostsScreen} />
+          <MainStack.Screen name="Create" component={CreatePostsScreen} />
+          <MainStack.Screen name="Profile" component={ProfileScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   
