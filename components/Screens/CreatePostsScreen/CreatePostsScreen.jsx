@@ -91,7 +91,7 @@ export function CreatePostsScreen() {
     >
       
       
-            <Tabs.Screen name="Create" component={ProfileScreen} />
+            <Tabs.Screen name="Create1" component={ProfileScreen} />
                         
            
         </Tabs.Navigator>

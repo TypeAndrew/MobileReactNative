@@ -36,17 +36,15 @@ export const ProfileScreen = ({ navigation }) => {
             <Avatar/>
       
             
-            
-          
-        </View>
-        <View style={styles.form}>
+          <View style={styles.form}>
                 
                 <View style={{ marginTop: 32 }}></View> 
         </View> 
-   
+    </View>
       <Tabs.Navigator 
         screenOptions={({ route }) => ({
           tabBarStyle: { height: 83, },
+    
           tabBarIcon: ({ focused, tintColor }) => {
   
           let iconName="";
@@ -73,9 +71,15 @@ export const ProfileScreen = ({ navigation }) => {
     
     >
       
-        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}/>
-        <Tabs.Screen  name="User" component={ProfileScreen} />  
-        <Tabs.Screen name="Rectangle" component={CreatePostsScreen} />
+        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}  options={{
+      tabBarLabel: 'null', 
+    }}/>
+        <Tabs.Screen  name="User" component={ProfileScreen}  options={{
+      tabBarLabel: 'null', 
+    }}/>  
+        <Tabs.Screen name="Rectangle" component={CreatePostsScreen}  options={{
+      tabBarLabel: 'null',
+    }}/>
      
         </Tabs.Navigator>
     
@@ -88,8 +92,8 @@ const styles = StyleSheet.create({
   container: {
         position: 'relative',
         height: 812,
-        backgroundColor: "#fff",
-           zIndex: 20
+        backgroundColor: "#E5E5E5",
+        zIndex: 20
 
     },
 

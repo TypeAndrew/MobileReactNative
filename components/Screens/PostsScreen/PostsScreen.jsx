@@ -34,6 +34,7 @@ export const PostsScreen = ({ navigation }) => {
       <Tabs.Navigator 
         screenOptions={({ route }) => ({
           tabBarStyle: { height: 83, },
+          tabBarLabel: '',
           tabBarIcon: ({ focused, tintColor }) => {
   
           let iconName = "";
@@ -43,11 +44,11 @@ export const PostsScreen = ({ navigation }) => {
             routePath = "Profile";
           } else if (route.name === "Rectangle") {
             iconName = xmlRectangle;
-            routePath = "Create";
+            routePath = "Rectangle";
             focused = true;
           } else if (route.name === "Grid") {
             iconName = xmlGrid;
-            
+             routePath = "User";
           }
           
           const color = focused ? "#FF6C00" : "#FFF";
