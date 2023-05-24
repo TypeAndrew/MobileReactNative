@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
   container: {
         position: 'relative',
-        height: 812,
+        height: 612,
         backgroundColor: "#E5E5E5",
         zIndex: 20
 
@@ -114,9 +114,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'white',
         borderRadius: 50,
-        paddingTop: 92,
+
         width:  375,
-        height: 549,
+        height: 349,
         top:   263,
         left:    0,
         zIndex: 30

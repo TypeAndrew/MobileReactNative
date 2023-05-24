@@ -1,5 +1,5 @@
 
-import { View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, 
+import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, 
     Keyboard,TextInput,
     KeyboardAvoidingView,
 } from "react-native";
@@ -10,14 +10,17 @@ import { xmlPhoto, xmlTrash } from "../../../assets/icons/icons";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+// import { ImageBackground } from "react-native-web";
 
-export function CreatePostsScreen() {
+export function CreatePostsScreen({navigation}) {
 
     const [name, setName] = useState("");
     const [geodata, setGeodata] = useState("");
-    const [cameraRef, setCameraRef] = useState(null);
+
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
+    const [camera, setCamera] = useState(null);
+    const [photo, setPhoto] = useState(null);
 
     const inputHandlerName = ((text) => {
         setName(text)
@@ -38,6 +41,18 @@ export function CreatePostsScreen() {
         })();
     }, []);
 
+    const takePhoto= async () => {
+        const photo= await camera.takePictureAsync();
+        setPhoto (photo.uri);
+        console.log("photo", photo);
+    };
+
+
+    const sendPhoto = () => {
+        console.log("navigation", navigation);
+        navigation.navigate("Home", { photo });
+    };
+    
     if (hasPermission === null) {
         return <View />;
     }
@@ -48,30 +63,32 @@ export function CreatePostsScreen() {
     // <SvgXml xml={xmlPhoto}  />
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
-    <View style={styles.container}>
+    <View style={styles.container} >
             <View >
     
              
                     <Camera style={styles.newPhoto}
-                            type={type}
-                            ref={(ref) => {
-                            setCameraRef(ref);
-                            }}>
-                        <TouchableOpacity  onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-                            <View style={styles.photoIcon} >
-                                <SvgXml xml={xmlPhoto} />  
-                            </View>
+                         
+                            ref={setCamera}>
+                        <TouchableOpacity  onPress={takePhoto}>
+                            
+                            {(photo === null) ? ( <ImageBackground
+                                    source={{ uri: photo }}
+                                    >
+                                         <SvgXml xml={xmlPhoto} />
+                                </ImageBackground>) :
+                                (
+                                <ImageBackground
+                                    source={{ uri: photo }}
+                                    >
+                                         <SvgXml xml={xmlPhoto} />
+                                </ImageBackground>
+                              )}
                         </TouchableOpacity>
                     </Camera>      
-                     
+             </View>           
     
-          </View>
+       
           <TouchableOpacity style={styles.uploadBtn}>
                 <Text>{true ? 'Upload photo' : 'Edit photo'}</Text>
           </TouchableOpacity>  
@@ -98,8 +115,9 @@ export function CreatePostsScreen() {
                     </KeyboardAvoidingView>    
                 </View>
                 <TouchableOpacity style={styles.btn} title={"publicate"}
-                                      onPress={() => navigation.navigate("Home")}
-                ><Text> Publicate</Text></TouchableOpacity>
+                                      onPress={sendPhoto}
+                    ><Text> Publicate</Text></TouchableOpacity>
+                    
               <View style={styles.container  }>
       <Tabs.Navigator 
         screenOptions={({ route }) => ({
@@ -126,7 +144,7 @@ export function CreatePostsScreen() {
     >
       
       
-            <Tabs.Screen name="Create1" component={ProfileScreen} />
+            <Tabs.Screen name="Create" component={ProfileScreen} />
                         
            
         </Tabs.Navigator>
@@ -206,4 +224,5 @@ const styles = StyleSheet.create({
         margin: (0,0),
 
     },
+  
 })

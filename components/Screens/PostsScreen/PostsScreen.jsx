@@ -1,7 +1,7 @@
-import {  View, Text, ImageBackground, StyleSheet } from "react-native";
+import {  View,  StyleSheet, FlatList, ImageBackground, Image} from "react-native";
 //import { TouchableOpacity } from "react-native-web";
 import  { SvgXml} from "react-native-svg";
-
+import { useState, useEffect } from "react";  
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import { Ionicons } from "@expo/vector-icons";
 import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
@@ -28,13 +28,43 @@ function Grid() {
 
 const Tabs = createBottomTabNavigator();
 
-export const PostsScreen = ({ navigation }) => {
+export const PostsScreen = ({ route, navigation }) => {
+  console.log("-----------"+navigation);
+  const [posts, setPosts] = useState([]);
+  console.log("route.params", route.params);
+
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
+  console.log("posts", posts);
+  
   return (
-    <View style={styles.container  }>
+     <View style={styles.container}>
+      <FlatList
+        data={posts}
+        keyExtractor={(item, indx) => indx.toString()}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              marginBottom: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={{ uri: item.photo }}
+              style={{ width: 350, height: 200 }}
+            />
+          </View>
+        )}
+      />
+   
       <Tabs.Navigator 
         screenOptions={({ route }) => ({
           tabBarStyle: { height: 83, },
-          tabBarLabel: '',
+          headerShown: false,
           tabBarIcon: ({ focused, tintColor }) => {
   
           let iconName = "";
@@ -44,7 +74,7 @@ export const PostsScreen = ({ navigation }) => {
             routePath = "Profile";
           } else if (route.name === "Rectangle") {
             iconName = xmlRectangle;
-            routePath = "Rectangle";
+            routePath = "Create";
             focused = true;
           } else if (route.name === "Grid") {
             iconName = xmlGrid;
@@ -66,13 +96,19 @@ export const PostsScreen = ({ navigation }) => {
     >
       
         <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}
-          
+           screenOptions={{
+      tabBarLabel: '', 
+    }}
         />
           
-        <Tabs.Screen name="Rectangle" component={CreatePostsScreen} 
+        <Tabs.Screen name="Rectangle" component={CreatePostsScreen}  screenOptions={{
+      tabBarLabel: '', 
+    }}
         />
      
-        <Tabs.Screen  name="User" component={ProfileScreen} />
+        <Tabs.Screen  name="User" component={ProfileScreen}  screenOptions={{
+      tabBarLabel: '', 
+    }}/>
        
     
         
@@ -86,8 +122,7 @@ export const PostsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 
   container: {
-        position: 'relative',
-        height: 700,
-        backgroundColor: "#fff"
+      flex: 1,
+    justifyContent: "center",
     }
 })
