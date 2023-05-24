@@ -3,18 +3,22 @@ import { View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback,
     Keyboard,TextInput,
     KeyboardAvoidingView,
 } from "react-native";
-import { useState } from "react";  
+import { useState, useEffect } from "react";  
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import  { SvgXml} from "react-native-svg";
 import { xmlPhoto, xmlTrash } from "../../../assets/icons/icons";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
 
 export function CreatePostsScreen() {
 
     const [name, setName] = useState("");
     const [geodata, setGeodata] = useState("");
+    const [cameraRef, setCameraRef] = useState(null);
+    const [hasPermission, setHasPermission] = useState(null);
+    const [type, setType] = useState(Camera.Constants.Type.back);
 
-    
     const inputHandlerName = ((text) => {
         setName(text)
         console.log(text);
@@ -25,16 +29,47 @@ export function CreatePostsScreen() {
         console.log(text);
     });
     
-    const Tabs = createBottomTabNavigator();
+     useEffect(() => {
+        (async () => {
+        const { status } = await Camera.requestPermissionsAsync();
+        await MediaLibrary.requestPermissionsAsync();
 
+        setHasPermission(status === "granted");
+        })();
+    }, []);
+
+    if (hasPermission === null) {
+        return <View />;
+    }
+    if (hasPermission === false) {
+        return <Text>No access to camera</Text>;
+    }
+    const Tabs = createBottomTabNavigator();
+    // <SvgXml xml={xmlPhoto}  />
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
     <View style={styles.container}>
-    <View style={styles.newPhoto}>
+            <View >
     
-              <View style={styles.photoIcon} >
-                      <SvgXml xml={xmlPhoto}  /> 
-              </View>       
+             
+                    <Camera style={styles.newPhoto}
+                            type={type}
+                            ref={(ref) => {
+                            setCameraRef(ref);
+                            }}>
+                        <TouchableOpacity  onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}>
+                            <View style={styles.photoIcon} >
+                                <SvgXml xml={xmlPhoto} />  
+                            </View>
+                        </TouchableOpacity>
+                    </Camera>      
+                     
     
           </View>
           <TouchableOpacity style={styles.uploadBtn}>
@@ -111,23 +146,24 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     photoIcon: {
-        flex: 1,
-        position: 'absolute',
+       
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
         width: 50,
         height: 50,
         backgroundColor: "#fff",
-        top: 100,
-        left: 150,
+
 
     },
   
     newPhoto: {
         
 
- 
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: 343,
         height: 240,
         left: 32,
@@ -135,7 +171,7 @@ const styles = StyleSheet.create({
 
         /* Gray/01 */
 
-        backgroundColor: '#F6F6F6',
+       // backgroundColor: '#F6F6F6',
         border: '1px solid #E8E8E8',
         borderRadius: 8,
     },
