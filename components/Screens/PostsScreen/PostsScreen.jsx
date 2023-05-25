@@ -1,4 +1,4 @@
-import {  View,  StyleSheet, FlatList, ImageBackground, Image} from "react-native";
+import {  View, Text, StyleSheet, FlatList, ImageBackground, Image} from "react-native";
 //import { TouchableOpacity } from "react-native-web";
 import  { SvgXml} from "react-native-svg";
 import { useState, useEffect } from "react";  
@@ -31,7 +31,7 @@ const Tabs = createBottomTabNavigator();
 export const PostsScreen = ({ route, navigation }) => {
   console.log("-----------"+navigation);
   const [posts, setPosts] = useState([]);
-  console.log("route.params", route.params);
+  console.log("route.params", route);
 
   useEffect(() => {
     if (route.params) {
@@ -54,9 +54,11 @@ export const PostsScreen = ({ route, navigation }) => {
             }}
           >
             <Image
-              source={{ uri: item.photo }}
+              source={{ uri: item.photo.picture }}
               style={{ width: 350, height: 200 }}
             />
+            <Text>{item.photo?.title}</Text>
+            <Text>{item.photo?.geodata}</Text>
           </View>
         )}
       />

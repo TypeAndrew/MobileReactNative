@@ -20,7 +20,7 @@ export function CreatePostsScreen({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [camera, setCamera] = useState(null);
-    const [photo, setPhoto] = useState(null);
+    const [photo, setPhoto] = useState({});
 
     const inputHandlerName = ((text) => {
         setName(text)
@@ -43,7 +43,7 @@ export function CreatePostsScreen({navigation}) {
 
     const takePhoto= async () => {
         const photo= await camera.takePictureAsync();
-        setPhoto (photo.uri);
+        setPhoto({picture: photo?.uri, title: name , geodata: geodata });
         console.log("photo", photo);
     };
 
@@ -73,13 +73,13 @@ export function CreatePostsScreen({navigation}) {
                         <TouchableOpacity  onPress={takePhoto}>
                             
                             {(photo === null) ? ( <ImageBackground
-                                    source={{ uri: photo }}
+                                    source={{ uri: photo.picture }}
                                     >
                                          <SvgXml xml={xmlPhoto} />
                                 </ImageBackground>) :
                                 (
                                 <ImageBackground
-                                    source={{ uri: photo }}
+                                    source={{ uri: photo.picture }}
                                     >
                                          <SvgXml xml={xmlPhoto} />
                                 </ImageBackground>
