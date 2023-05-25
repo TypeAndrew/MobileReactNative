@@ -1,7 +1,7 @@
 
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, 
     Keyboard,TextInput,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView, Alert 
 } from "react-native";
 import { useState, useEffect } from "react";  
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -63,7 +63,10 @@ export function CreatePostsScreen({navigation}) {
 
     const sendPhoto = () => {
         console.log("navigation", navigation);
-        navigation.navigate("Home", { photo });
+        
+        photo.picture !== undefined ? navigation.navigate("Home", { photo })
+                                    : Alert.alert('Error', 'Make a photo please.');;
+
     };
     
     if (hasPermission === null) {
@@ -100,7 +103,7 @@ export function CreatePostsScreen({navigation}) {
                         </TouchableOpacity>
                     </Camera>      
              </View>           
-    
+  
        
           <TouchableOpacity style={styles.uploadBtn}>
                 <Text>{true ? 'Upload photo' : 'Edit photo'}</Text>

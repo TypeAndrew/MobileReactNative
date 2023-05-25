@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import { Ionicons } from "@expo/vector-icons";
 import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
-import { xmlUser,xmlGrid,xmlRectangle,xmlHomeLine } from "../../../assets/icons/icons";
+import { xmlUser,xmlGrid,xmlRectangle,xmlComment,xmlNavi} from "../../../assets/icons/icons";
 
                
 
@@ -56,8 +56,6 @@ export const PostsScreen = ({ route, navigation }) => {
           <View
             style={{
               marginBottom: 10,
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <Image
@@ -65,7 +63,14 @@ export const PostsScreen = ({ route, navigation }) => {
               style={{ width: 350, height: 200 }}
             />
             <Text>{item.photo?.title}</Text>
-            <Text onPress={() => openMap(item)} >{item.photo?.geodata}</Text>
+            <Text styles={styles.geoString}>
+                                      
+                <SvgXml xml={xmlComment} width="10" height="10" onPress={() => navigation.navigate("Comment")} />
+              <Text>           </Text>  
+              <SvgXml xml={xmlNavi} width="10" height="10" onPress={() => openMap(item)} /> 
+              <Text>  </Text>  
+              <Text onPress={() => openMap(item)} >{item.photo?.geodata}</Text>
+            </Text>  
           </View>
         )}
       />
@@ -132,6 +137,13 @@ const styles = StyleSheet.create({
 
   container: {
       flex: 1,
-    justifyContent: "center",
-    }
+    color: '#fff',
+      
+  },
+  geoString: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+ 
+  }
 })
