@@ -10,7 +10,9 @@ import { LoginScreen} from './components/Screens/LoginScreen/LoginScreen'
 import { PostsScreen } from './components/Screens/PostsScreen/PostsScreen'
 import { CreatePostsScreen } from './components/Screens/CreatePostsScreen/CreatePostsScreen';
 import { ProfileScreen } from './components/Screens/ProfileScreen/ProfileScreen';
+import {MapScreen } from './components/Screens/MapScreen/MapScreen';
 import { useFonts } from 'expo-font';
+
 
 
 export default function App() {
@@ -33,6 +35,7 @@ export default function App() {
           <MainStack.Screen name="Home" component={PostsScreen} />
           <MainStack.Screen name="Create" component={CreatePostsScreen} />
           <MainStack.Screen name="Profile" component={ProfileScreen} />
+          <MainStack.Screen name="Map" component={MapScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   

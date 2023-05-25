@@ -11,6 +11,7 @@ import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 // import { ImageBackground } from "react-native-web";
+import * as Location from "expo-location";
 
 export function CreatePostsScreen({navigation}) {
 
@@ -36,15 +37,27 @@ export function CreatePostsScreen({navigation}) {
         (async () => {
         const { status } = await Camera.requestPermissionsAsync();
         await MediaLibrary.requestPermissionsAsync();
-
+        await Location.requestPermissionsAsync();
         setHasPermission(status === "granted");
         })();
     }, []);
 
     const takePhoto= async () => {
         const photo= await camera.takePictureAsync();
-        setPhoto({picture: photo?.uri, title: name , geodata: geodata });
         console.log("photo", photo);
+
+       
+        const location = await Location.getCurrentPositionAsync();
+ 
+        console.log("latitude", location.coords.latitude);
+        console.log("longitude", location.coords.longitude);
+
+        setPhoto({picture: photo?.uri, 
+                  title: name , 
+                  geodata: geodata, 
+                  latitude: location?.coords?.latitude,
+                  longitude: location?.coords?.longitude });
+        
     };
 
 

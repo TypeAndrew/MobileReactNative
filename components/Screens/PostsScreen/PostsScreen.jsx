@@ -40,6 +40,13 @@ export const PostsScreen = ({ route, navigation }) => {
   }, [route.params]);
   console.log("posts", posts);
   
+  const openMap = (latitude) => {
+   
+    navigation.navigate("Map",  latitude );
+    console.log("latitude", latitude);
+    //console.log("longitude", longitude);
+  };
+
   return (
      <View style={styles.container}>
       <FlatList
@@ -58,7 +65,7 @@ export const PostsScreen = ({ route, navigation }) => {
               style={{ width: 350, height: 200 }}
             />
             <Text>{item.photo?.title}</Text>
-            <Text>{item.photo?.geodata}</Text>
+            <Text onPress={() => openMap(item)} >{item.photo?.geodata}</Text>
           </View>
         )}
       />
