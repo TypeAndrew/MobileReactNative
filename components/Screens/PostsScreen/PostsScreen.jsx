@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import { Ionicons } from "@expo/vector-icons";
 import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
-import { xmlUser,xmlGrid,xmlRectangle,xmlComment,xmlNavi} from "../../../assets/icons/icons";
+import {xmlComment,xmlNavi} from "../../../assets/icons/icons";
 
                
 
@@ -75,60 +75,7 @@ export const PostsScreen = ({ route, navigation }) => {
         )}
       />
    
-      <Tabs.Navigator 
-        screenOptions={({ route }) => ({
-          tabBarStyle: { height: 83, },
-          headerShown: false,
-          tabBarIcon: ({ focused, tintColor }) => {
-  
-          let iconName = "";
-          let routePath ="";  
-          if (route.name === "User") {
-            iconName = xmlUser;
-            routePath = "Profile";
-          } else if (route.name === "Rectangle") {
-            iconName = xmlRectangle;
-            routePath = "Create";
-            focused = true;
-          } else if (route.name === "Grid") {
-            iconName = xmlGrid;
-             routePath = "User";
-          }
-          
-          const color = focused ? "#FF6C00" : "#FFF";
-          const icon = iconName.replace('{color}', color);
-          return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
-
-            
-            <SvgXml xml={icon} width="70" height="40" onPress={() => navigation.navigate(routePath)} /> 
-                 
-            </View>)
-
-        },
-      })}
-    
-    >
-      
-        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}
-           screenOptions={{
-      tabBarLabel: '', 
-    }}
-        />
-          
-        <Tabs.Screen name="Rectangle" component={CreatePostsScreen}  screenOptions={{
-      tabBarLabel: '', 
-    }}
-        />
-     
-        <Tabs.Screen  name="User" component={ProfileScreen}  screenOptions={{
-      tabBarLabel: '', 
-    }}/>
-       
-    
-        
-        
-         
-      </Tabs.Navigator>
+ 
       </View>
   );
 };

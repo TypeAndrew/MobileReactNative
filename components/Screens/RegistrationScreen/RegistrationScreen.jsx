@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 
 import { Avatar } from '../../Avatar/Avatar'
-export const RegistrationScreen = ({ navigation }) =>{
+export const RegistrationScreen = ({ navigation }) => {
     
     const [showPassword, setShowPassword] = useState(false);
 

@@ -10,7 +10,7 @@ import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { xmlUser,xmlGrid,xmlRectangle,xmlHomeLine } from "../../../assets/icons/icons";
 import { Avatar } from '../../Avatar/Avatar'
                
-
+import { useRoute } from "../../../router"; 
 
 
 function Grid() {
@@ -30,7 +30,10 @@ function Grid() {
 const Tabs = createBottomTabNavigator();
 
 export const ProfileScreen = ({ navigation }) => {
-    return (
+    
+    const routing = useRoute(true);
+
+  return (
        <View>  
         <View style={styles.container}>
             <Avatar/>
@@ -41,47 +44,7 @@ export const ProfileScreen = ({ navigation }) => {
                 <View style={{ marginTop: 32 }}></View> 
         </View> 
     </View>
-      <Tabs.Navigator 
-        screenOptions={({ route }) => ({
-          tabBarStyle: { height: 83, },
-    
-          tabBarIcon: ({ focused, tintColor }) => {
-  
-          let iconName="";
-          if (route.name === "User") {
-              iconName = xmlUser;
-              focused = true;
-          } else if (route.name === "Rectangle") {
-            iconName = xmlRectangle;
-          } else if (route.name === "Grid") {
-            iconName = xmlGrid;
-          }
-          
-          const color = focused ? "#FF6C00" : "#FFF";
-          const icon = iconName.replace('{color}', color);
-          return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
-
-            
-            <SvgXml xml={icon} width="70" height="40" onPress={() => navigation.navigate("Create")} /> 
-                 
-            </View>)
-
-        },
-      })}
-    
-    >
-      
-        <Tabs.Screen name="Grid" component={Grid} activeTintColor={"tomato"}  options={{
-      tabBarLabel: 'null', 
-    }}/>
-        <Tabs.Screen  name="User" component={ProfileScreen}  options={{
-      tabBarLabel: 'null', 
-    }}/>  
-        <Tabs.Screen name="Rectangle" component={CreatePostsScreen}  options={{
-      tabBarLabel: 'null',
-    }}/>
      
-        </Tabs.Navigator>
     
      </View>           
   );

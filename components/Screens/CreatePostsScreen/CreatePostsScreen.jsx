@@ -3,7 +3,8 @@ import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, TouchableWit
     Keyboard,TextInput,
     KeyboardAvoidingView, Alert 
 } from "react-native";
-import { useState, useEffect } from "react";  
+import { useState, useEffect } from "react"; 
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import  { SvgXml} from "react-native-svg";
 import { xmlPhoto, xmlTrash } from "../../../assets/icons/icons";
@@ -12,6 +13,8 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 // import { ImageBackground } from "react-native-web";
 import * as Location from "expo-location";
+
+import { useRoute } from "../../../router"; 
 
 export function CreatePostsScreen({navigation}) {
 
@@ -22,6 +25,9 @@ export function CreatePostsScreen({navigation}) {
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [camera, setCamera] = useState(null);
     const [photo, setPhoto] = useState({});
+
+    const routing = useRoute(true);
+
 
     const inputHandlerName = ((text) => {
         setName(text)
@@ -135,35 +141,7 @@ export function CreatePostsScreen({navigation}) {
                     ><Text> Publicate</Text></TouchableOpacity>
                     
               <View style={styles.container  }>
-      <Tabs.Navigator 
-        screenOptions={({ route }) => ({
-          tabBarStyle: { height: 83, },
-          tabBarIcon: ({ focused, tintColor }) => {
-  
-          let iconName="";
-  
-          iconName = xmlTrash;
-        
-          
-          const color = focused ? "#F6F6F6" : "#FFF";
-          const icon = iconName.replace('{color}', color);
-          return(  <View style={{ flex: 1, justifyContent: "center", alignItems: "center"} }>
-
-            
-             <SvgXml xml={icon} width="70" height="40" /> 
-                 
-            </View>)
-
-        },
-      })}
-    
-    >
       
-      
-            <Tabs.Screen name="Create" component={ProfileScreen} />
-                        
-           
-        </Tabs.Navigator>
         </View>   
     </View> 
     </TouchableWithoutFeedback>
