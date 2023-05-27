@@ -24,7 +24,15 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+      "firebase": {
+        "apiKey": "AIzaSyCcSYnBYpmlGJs1daceTKf8_nYiy6VW2k0",
+        "authDomain": "reactnative-6e9d4.firebaseapp.com"
+       
     }
   }
+
+  }
+}
 }
