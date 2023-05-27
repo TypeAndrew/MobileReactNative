@@ -90,9 +90,7 @@ function BottomNavigation(shouldSwapScreens ) {
       >   
            <MainTab.Screen
             options={{
-             tabBarIcon: ({ focused, size, color }) => (
-            <AntDesign name="pluscircleo" size={35} color={color} />
-            ),
+            
             }}
             name="Home"
             component={PostsScreen}

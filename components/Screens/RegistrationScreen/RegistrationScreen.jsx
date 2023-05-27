@@ -4,12 +4,23 @@ import {
     Keyboard,
     KeyboardAvoidingView,
     Platform, } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Avatar } from '../../Avatar/Avatar'
+
+import { authSignUpUser } from "../../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
+const initialState = {
+  email: "",
+  password: "",
+  nickname: "",
+};
+
 export const RegistrationScreen = ({ navigation }) => {
     
     const [showPassword, setShowPassword] = useState(false);
+    const [state, setstate] = useState(initialState);
+    const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -19,18 +30,32 @@ export const RegistrationScreen = ({ navigation }) => {
     const [password, setPassword] = useState("");
     
     const inputHandlerLogin = ((text) => {
-        setlogin(text)
-        console.log(text);
+        setstate((prevState) => ({ ...prevState, nickname: text }))
+        console.log(state);
     });
     const inputHandlerEmail = ((text) => {
-        setEmail(text)
-        console.log(text);
+        setstate((prevState) => ({ ...prevState, email: text }))
+         console.log(state);
     });
     const inputHandlerPassword = ((text) => {
-        setPassword(text)
-        console.log(text);
+         setstate((prevState) => ({ ...prevState, password: text }))
+        
+        console.log(state);
     });
+    
+    useEffect(()=> {
+        console.log(state);
+    })
+    const dispatch = useDispatch();
+    
+    const handleSubmit = () => {
+        setIsShowKeyboard(false);
+        Keyboard.dismiss();
 
+        dispatch(authSignUpUser(state));
+        setstate(initialState);
+        navigation.navigate("Home")
+    };
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
         <View style={styles.container}>
@@ -52,8 +77,9 @@ export const RegistrationScreen = ({ navigation }) => {
                             <TextInput
                                 style={styles.input} textAlign={"center"}
                                 placeholder="LOGIN"
-                                value={login}
-                                onChangeText={inputHandlerLogin} />
+                                value={state.nickname}
+                                onChangeText={inputHandlerLogin}
+                                onFocus={() => setIsShowKeyboard(true)}/>
                         </KeyboardAvoidingView>
                 </View>
                 <View style={{ marginTop: 16 }}> 
@@ -62,8 +88,9 @@ export const RegistrationScreen = ({ navigation }) => {
                             >
                         <TextInput placeholder="EMAIL"
                             style={styles.input} textAlign={"center"}
-                            value={email}
-                            onChangeText={inputHandlerEmail} />
+                            value={state.email}
+                                onChangeText={inputHandlerEmail}
+                                onFocus={() => setIsShowKeyboard(true)}/>
                     </KeyboardAvoidingView>    
                 </View>
                 <View style={{ marginTop: 16, position: 'relative' }}> 
@@ -73,8 +100,9 @@ export const RegistrationScreen = ({ navigation }) => {
                         <TextInput placeholder="PASSWORD"
                             style={styles.input} textAlign={"center"}
                             secureTextEntry={!showPassword}
-                            value={password}
-                            onChangeText={inputHandlerPassword} />
+                            value={state.password}
+                            onChangeText={inputHandlerPassword}
+                            onFocus={() => setIsShowKeyboard(true)}/>
                              <View style={styles.CheckBox}>
    
                                 <TouchableOpacity title="show" onPress={togglePasswordVisibility}>
@@ -85,7 +113,7 @@ export const RegistrationScreen = ({ navigation }) => {
                 </View>
             
                     <TouchableOpacity style={styles.btn} title={"Sign in"}
-                                      onPress={() => navigation.navigate("Home")}
+                                      onPress={handleSubmit }
                                       ><Text> Sign in</Text></TouchableOpacity>
                     <Text style={styles.text}
                           onPress={() => navigation.navigate("Login")}>already registered, login </Text>

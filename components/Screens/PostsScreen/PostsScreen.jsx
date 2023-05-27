@@ -59,7 +59,7 @@ export const PostsScreen = ({ route, navigation }) => {
             }}
           >
             <Image
-              source={{ uri: item.photo.picture }}
+              source={{ uri: item.photo?.picture }}
               style={{ width: 350, height: 200 }}
             />
             <Text>{item.photo?.title}</Text>

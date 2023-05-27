@@ -1,38 +1,35 @@
 <script src="http://localhost:8097"></script>
+
 import React, { useState, useEffect, StyleSheet } from "react";
 import {} from "react-native";
 
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
-
 import { NavigationContainer} from "@react-navigation/native";
-
-
 import { useRoute } from "./router";
-
-const loadApplication = async () => {
-  await Font.loadAsync({
-      'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-  });
-};
+import { useFonts } from 'expo-font';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
+   
+  const [fontsLoaded] = useFonts({
+    'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+  });
   
-  
-  const [iasReady, setIasReady] = useState(false);
+  if (!fontsLoaded) {
+    return null;
+  }
+ 
 
   const routing = useRoute(true);
- /* if (!iasReady) {
-    return (
-      <AppLoading
-        startAsync={loadApplication}
-        onFinish={() => setIasReady(true)}
-        onError={console.warn}
-      />
-    );
-  }*/
+   
+  
 
-  return <NavigationContainer>{routing}</NavigationContainer>;
+   return (
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
+  );
+   
 }
 
 /*const styles = StyleSheet.create({

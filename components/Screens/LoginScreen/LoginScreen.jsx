@@ -74,7 +74,7 @@ export const LoginScreen = ({ navigation }) =>{
                                       onPress={() => navigation.navigate("Home")}
                                       ><Text>Login</Text></TouchableOpacity>
                     <Text style={styles.text}
-                          onPress={() => navigation.navigate("Registration")}>no account, register </Text>
+                          onPress={() => navigation.navigate("Register")}>no account, register </Text>
             
             </View>
         </View>
