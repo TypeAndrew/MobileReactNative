@@ -25,22 +25,15 @@ export const RegistrationScreen = ({ navigation }) => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }    
-    const [login, setlogin] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
+  
     const inputHandlerLogin = ((text) => {
         setstate((prevState) => ({ ...prevState, nickname: text }))
-        console.log(state);
     });
     const inputHandlerEmail = ((text) => {
         setstate((prevState) => ({ ...prevState, email: text }))
-         console.log(state);
     });
     const inputHandlerPassword = ((text) => {
-         setstate((prevState) => ({ ...prevState, password: text }))
-        
-        console.log(state);
+         setstate((prevState) => ({ ...prevState, password: text }))        
     });
     
     useEffect(()=> {
@@ -54,7 +47,7 @@ export const RegistrationScreen = ({ navigation }) => {
 
         dispatch(authSignUpUser(state));
         //setstate(initialState);
-        //navigation.navigate("Home")
+        navigation.navigate("Home")
     };
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  

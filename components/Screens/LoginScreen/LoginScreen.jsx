@@ -3,30 +3,53 @@ import {
     TouchableWithoutFeedback, 
     Keyboard,
     KeyboardAvoidingView, 
+    Dimensions,
     Platform, } from "react-native";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../../redux/auth/authOperations";
+
+const initialState = {
+  email: "",
+  password: "",
+};
 
 export const LoginScreen = ({ navigation }) =>{
     const [showPassword, setShowPassword] = useState(false);
+    const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+    const [state, setstate] = useState(initialState);
 
-    const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
     
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+    
+
+    
+    const keyboardHide = () => {
+        Keyboard.dismiss();
+        setIsShowKeyboard(false);
+    };
     const inputHandlerEmail = ((text) => {
-        setEmail(text)
-        console.log(text);
+        setstate((prevState) => ({ ...prevState, email: text }))
     });
     const inputHandlerPassword = ((text) => {
-        setPassword(text)
-        console.log(text);
+         setstate((prevState) => ({ ...prevState, password: text }))        
     });
 
+    const handleSubmit = () => {
+        console.log("click");
+        setIsShowKeyboard(false);
+        Keyboard.dismiss();
+        dispatch(authSignInUser(state));
+        setstate(initialState);
+        navigation.navigate("Home")
+        }
+  
     return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>   
+    <TouchableWithoutFeedback onPress={keyboardHide}>   
         <View style={styles.container}>
             <ImageBackground
             style={styles.image}
@@ -34,7 +57,7 @@ export const LoginScreen = ({ navigation }) =>{
         
             
             </ImageBackground> 
-    
+          
             <View style={styles.form}>
                 <Text style={[styles.text, styles.header]}>Login</Text>
                 <View style={{ marginTop: 32 }}>
@@ -43,8 +66,9 @@ export const LoginScreen = ({ navigation }) =>{
                                 >
                         <TextInput placeholder="EMAIL"
                             style={styles.input} textAlign={"center"}
-                            value={email}
-                                onChangeText={inputHandlerEmail} />
+                            value={state.email}
+                            onChangeText={inputHandlerEmail} 
+                            onFocus={() => setIsShowKeyboard(true)}/>
                     </KeyboardAvoidingView>        
                 </View>
                 <View style={{ marginTop: 16, position: 'relative' }}> 
@@ -53,11 +77,11 @@ export const LoginScreen = ({ navigation }) =>{
                         >
                     
                             <TextInput placeholder="PASSWORD"
-                            style={styles.input} textAlign={"center"}
-                            secureTextEntry={!showPassword}
-                                    value={password}
-                        
-                                onChangeText={inputHandlerPassword} >
+                                style={styles.input} textAlign={"center"}
+                                secureTextEntry={!showPassword}
+                                value={state.password}
+                                onChangeText={inputHandlerPassword}
+                                onFocus={() => setIsShowKeyboard(true)}>
                            
                             </TextInput>
                             <View style={styles.CheckBox}>
@@ -71,13 +95,14 @@ export const LoginScreen = ({ navigation }) =>{
                 </View>
 
                     <TouchableOpacity title="Login" style={styles.btn}
-                                      onPress={() => navigation.navigate("Home")}
+                                      onPress={handleSubmit }
                                       ><Text>Login</Text></TouchableOpacity>
                     <Text style={styles.text}
                           onPress={() => navigation.navigate("Register")}>no account, register </Text>
             
             </View>
-        </View>
+        </View>        
+  
     </TouchableWithoutFeedback>         
     )
 }
