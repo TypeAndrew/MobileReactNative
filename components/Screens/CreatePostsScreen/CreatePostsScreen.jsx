@@ -15,6 +15,9 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 import { useRoute } from "../../../router"; 
+import  db  from "../../../firebase/config";
+import { getDownloadURL, ref, uploadBytes, getStorage } from "firebase/storage";
+import { getAuth} from "firebase/auth";
 
 export function CreatePostsScreen({navigation}) {
 
@@ -48,6 +51,33 @@ export function CreatePostsScreen({navigation}) {
         })();
     }, []);
 
+     const uploadPhotoToServer = async () => {
+         console.log("0000000000000000000");
+         console.log("00000000000111111111111");
+         console.log(photo);
+         const response = await fetch(photo.picture);
+         console.log("00000000000111111111111");
+        const file = await response.blob();
+        
+        const uniquePostId = Date.now().toString();
+      
+         const auth =  getAuth(db);
+          console.log("1111111111111111"+JSON.stringify(file));
+         const token = await auth.idToken;
+         console.log("22222222222222222");
+         const storage = getStorage(token);
+         console.log("3333333333333333"+JSON.stringify(storage));
+         const storageRef = ref(storage, `postImage/${uniquePostId}`);
+         console.log("444444444444444"+JSON.stringify(storageRef));
+         await uploadBytes(storageRef, file);
+         const photoUrl = await getDownloadURL(ref(storage, `postImage/${photoId}`));
+         console.log("555555555555555");
+         console.log("data", photoUrl);
+         return photoUrl;
+         
+         
+    };
+
     const takePhoto= async () => {
         const photo= await camera.takePictureAsync();
         console.log("photo", photo);
@@ -69,9 +99,10 @@ export function CreatePostsScreen({navigation}) {
 
     const sendPhoto = () => {
         console.log("navigation", navigation);
-        
+         uploadPhotoToServer();
         photo.picture !== undefined ? navigation.navigate("Home", { photo })
-                                    : Alert.alert('Error', 'Make a photo please.');;
+            : Alert.alert('Error', 'Make a photo please.');
+        
 
     };
     

@@ -13,8 +13,7 @@ export const xmlRectangle = `<svg width="70" height="40" viewBox="0 0 70 40" fil
 
         <rect width="70" height="40" rx="20" fill={color}/>
         <text x="35" y="25" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#111">+</text>
-        </svg>
-`;
+        </svg>`;
       
 export const xmlGrid = `<svg width="40" height="40" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(0,-5)"> 
@@ -52,4 +51,10 @@ export const xmlNavi = `<svg width="18" height="20" viewBox="0 0 18 20" fill="no
 
 export const xmlComment = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                          <path fill-rule="evenodd" clip-rule="evenodd" d="M1 9.5C0.996559 10.8199 1.30493 12.1219 1.9 13.3C3.33904 16.1793 6.28109 17.9988 9.5 18C10.8199 18.0034 12.1219 17.6951 13.3 17.1L19 19L17.1 13.3C17.6951 12.1219 18.0034 10.8199 18 9.5C17.9988 6.28109 16.1793 3.33904 13.3 1.9C12.1219 1.30493 10.8199 0.996557 9.5 0.999998H9C4.68419 1.2381 1.2381 4.68419 1 9V9.5V9.5Z" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>`
+                        
+export const xmlLogout =  `<svg width = "70" height = "40" viewBox = "0 0 70 40" fill = "none" xmlns = "http://www.w3.org/2000/svg" >
+                        <path d="M10 22H5C3.89543 22 3 21.1046 3 20V4C3 2.89543 3.89543 2 5 2H10" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 16L21 12L17 8" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12H9" stroke="#BDBDBD" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>`

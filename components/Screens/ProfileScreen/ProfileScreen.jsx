@@ -7,11 +7,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import { Ionicons } from "@expo/vector-icons";
 import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 
-import { xmlUser,xmlGrid,xmlRectangle,xmlHomeLine } from "../../../assets/icons/icons";
+import {xmlLogout} from "../../../assets/icons/icons";
 import { Avatar } from '../../Avatar/Avatar'
-               
+ import { useDispatch } from "react-redux";              
 import { useRoute } from "../../../router"; 
-
+import { authSignOutUser } from "../../../redux/auth/authOperations";
 
 function Grid() {
   return (
@@ -24,20 +24,37 @@ function Grid() {
 }
 
 
-
+  
 
 
 const Tabs = createBottomTabNavigator();
 
 export const ProfileScreen = ({ navigation }) => {
+  
+  const dispatch = useDispatch(); 
+  const handleSubmit = () => {
+  
+
+        dispatch(authSignOutUser(navigation));
+        //setstate(initialState);
+        
+    };
     
-    const routing = useRoute(true);
+  const routing = useRoute(true);
 
   return (
        <View>  
         <View style={styles.container}>
-            <Avatar/>
-      
+                  <ImageBackground
+            style={styles.image}
+            source={require("../../../assets/images/loginBG.png")}> 
+        
+            
+            </ImageBackground> 
+              <Avatar/>
+              <SvgXml xml={xmlLogout} style={styles.logout } width="70" height="40" onPress={handleSubmit
+                  } /> 
+
             
           <View style={styles.form}>
                 
@@ -83,6 +100,16 @@ const styles = StyleSheet.create({
         top:   263,
         left:    0,
         zIndex: 30
+        
+  },
+     logout: { 
+        position: 'absolute',
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        top:   300,
+        right:    3,
+        zIndex: 50
         
      },
 })

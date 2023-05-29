@@ -43,11 +43,15 @@ export const LoginScreen = ({ navigation }) =>{
         console.log("click");
         setIsShowKeyboard(false);
         Keyboard.dismiss();
-        dispatch(authSignInUser(state));
+        const succsess = dispatch(authSignInUser(state,navigation));
+        console.log(succsess);
         setstate(initialState);
-        navigation.navigate("Home")
-        }
-  
+        navigation.navigate("Profile")
+
+      
+
+    }
+    
     return (
     <TouchableWithoutFeedback onPress={keyboardHide}>   
         <View style={styles.container}>
