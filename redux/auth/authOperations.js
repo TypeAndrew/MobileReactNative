@@ -4,7 +4,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut ,
-  onAuthStateChanged 
+  onAuthStateChanged,
+  updateProfile
   
 } from 'firebase/auth';
 
@@ -39,6 +40,11 @@ export const authSignInUser = ({ email, password }, navigation) => async (
 
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
+     updateProfile(auth.currentUser, {
+        displayName: login,
+        email,
+      });
+
     navigation.navigate("Home");
     console.log("user", user);
   } catch (error) {
@@ -64,21 +70,25 @@ export const authSignOutUser = ( navigation) => async (dispatch, getState) => {
 export const authStateCahngeUser = () => async (dispatch, getState) => {
  
  
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-     const userUpdateProfile = {
-        nickName: user.displayName,
-        userId: user.uid,
-      };
+   try {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          updateUserProfile({
+            userId: user.uid,
+            login: user.displayName,
+            email: user.email,
+          })
+        );
 
-      dispatch(authSlice.actions.authStateChange({ stateChange: true }));
-      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+        dispatch(authStateChange({ stateChange: true }));
+      }
+    });
+  } catch (error) {
+    console.log("error:", error);
+    console.log("error.code:", error.code);
+    console.log("error.message:", error.message);
+  }
  
 
 };

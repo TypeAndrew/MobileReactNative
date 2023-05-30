@@ -13,25 +13,31 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 // import { ImageBackground } from "react-native-web";
 import * as Location from "expo-location";
-
+import { collection, addDoc } from "firebase/firestore";
 import { useRoute } from "../../../router"; 
 import  db  from "../../../firebase/config";
 import { getDownloadURL, ref, uploadBytes, getStorage } from "firebase/storage";
 import { getAuth} from "firebase/auth";
+import { useSelector } from "react-redux";
+import { selectUserId, selectLogin } from "../../../redux/selactors";
 
 export function CreatePostsScreen({navigation}) {
 
     const [name, setName] = useState("");
     const [geodata, setGeodata] = useState("");
-
+    const [location, setLocation] = useState(null);
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [camera, setCamera] = useState(null);
     const [photo, setPhoto] = useState({});
-
+    
     const routing = useRoute(true);
-
-
+    console.log("111111111111--");
+      const userId = useSelector(selectUserId);
+    console.log("22222222222222222--"+userId);
+    const login = useSelector(selectLogin);
+    console.log("33333333333333333"+login);
+  
     const inputHandlerName = ((text) => {
         setName(text)
         console.log(text);
@@ -41,14 +47,24 @@ export function CreatePostsScreen({navigation}) {
         setGeodata(text)
         console.log(text);
     });
-    
+        const resetData = () => {
+        setPhoto(null);
+        setGeodata(null);
+       
+    };
      useEffect(() => {
         (async () => {
         const { status } = await Camera.requestPermissionsAsync();
         await MediaLibrary.requestPermissionsAsync();
         await Location.requestPermissionsAsync();
         setHasPermission(status === "granted");
+        
+        const location = await Location.getCurrentPositionAsync({});
+        setLocation(location);    
+        
+        
         })();
+      
     }, []);
 
      const uploadPhotoToServer = async () => {
@@ -70,7 +86,7 @@ export function CreatePostsScreen({navigation}) {
          const storageRef = ref(storage, `postImage/${uniquePostId}`);
          console.log("444444444444444"+JSON.stringify(storageRef));
          await uploadBytes(storageRef, file);
-         const photoUrl = await getDownloadURL(ref(storage, `postImage/${photoId}`));
+         const photoUrl = await getDownloadURL(ref(storage, `postImage/${uniquePostId}`));
          console.log("555555555555555");
          console.log("data", photoUrl);
          return photoUrl;
@@ -78,6 +94,24 @@ export function CreatePostsScreen({navigation}) {
          
     };
 
+    const uploadPostToServer = async () => {
+    const photo = await uploadPhotoToServer();
+
+    try {
+      const title = photo?.title; 
+      const picture =  photo?.picture;  
+      const docRef = await addDoc(collection(db, "posts"), {
+        userId,
+        login,
+        location,
+        picture,
+        title,
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+    };
+    
     const takePhoto= async () => {
         const photo= await camera.takePictureAsync();
         console.log("photo", photo);
@@ -99,7 +133,8 @@ export function CreatePostsScreen({navigation}) {
 
     const sendPhoto = () => {
         console.log("navigation", navigation);
-         uploadPhotoToServer();
+        uploadPostToServer()
+      
         photo.picture !== undefined ? navigation.navigate("Home", { photo })
             : Alert.alert('Error', 'Make a photo please.');
         
@@ -215,7 +250,7 @@ const styles = StyleSheet.create({
         /* Gray/01 */
 
        // backgroundColor: '#F6F6F6',
-        border: '1px solid #E8E8E8',
+       // border: '1px solid #E8E8E8',
         borderRadius: 8,
     },
     uploadBtn: {

@@ -8,7 +8,7 @@ import { useRoute } from "./router";
 import { useFonts } from 'expo-font';
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-
+import { Main } from "./components/Main";
 export default function App() {
    
   const [fontsLoaded] = useFonts({
@@ -26,7 +26,7 @@ export default function App() {
 
    return (
     <Provider store={store}>
-      <NavigationContainer>{routing}</NavigationContainer>
+         <Main />
     </Provider>
   );
    

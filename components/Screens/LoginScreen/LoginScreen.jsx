@@ -47,9 +47,6 @@ export const LoginScreen = ({ navigation }) =>{
         console.log(succsess);
         setstate(initialState);
         navigation.navigate("Profile")
-
-      
-
     }
     
     return (

@@ -8,23 +8,6 @@ import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import {xmlComment,xmlNavi} from "../../../assets/icons/icons";
 
-               
-
-
-
-function Grid() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-       <ImageBackground
-                style={styles.image}
-                source={require('../../../assets/icons/grid.svg')}/> 
-    </View>
-  );
-}
-
-
-
-
 
 const Tabs = createBottomTabNavigator();
 
@@ -47,6 +30,13 @@ export const PostsScreen = ({ route, navigation }) => {
     //console.log("longitude", longitude);
   };
 
+  const openComments = (latitude) => {
+   
+    navigation.navigate("Comment", route )
+    console.log("route", route);
+    //console.log("longitude", longitude);
+  };
+  
   return (
      <View style={styles.container}>
       <FlatList
@@ -65,7 +55,7 @@ export const PostsScreen = ({ route, navigation }) => {
             <Text>{item.photo?.title}</Text>
             <Text styles={styles.geoString}>
                                       
-                <SvgXml xml={xmlComment} width="10" height="10" onPress={() => navigation.navigate("Comment")} />
+              <SvgXml xml={xmlComment} width="10" height="10" onPress={openComments} />
               <Text>           </Text>  
               <SvgXml xml={xmlNavi} width="10" height="10" onPress={() => openMap(item)} /> 
               <Text>  </Text>  

@@ -8,9 +8,10 @@ import { authStateCahngeUser } from "../redux/auth/authOperations";
 export const Main = () => {
   const { stateChange } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
   useEffect(() => {
     dispatch(authStateCahngeUser());
+    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
   }, []);
 
   const routing = useRoute(stateChange);
