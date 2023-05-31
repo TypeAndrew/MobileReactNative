@@ -19,7 +19,7 @@ const initialState = {
 export const RegistrationScreen = ({ navigation }) => {
     
     const [showPassword, setShowPassword] = useState(false);
-    const [auth, setauth] = useState(initialState);
+    const [state, setState] = useState(initialState);
     const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -27,17 +27,17 @@ export const RegistrationScreen = ({ navigation }) => {
     }    
   
     const inputHandlerLogin = ((text) => {
-        setauth((prevState) => ({ ...prevState, nickname: text }))
+        setState((prevState) => ({ ...prevState, login: text }))
     });
     const inputHandlerEmail = ((text) => {
-        setauth((prevState) => ({ ...prevState, email: text }))
+        setState((prevState) => ({ ...prevState, email: text }))
     });
     const inputHandlerPassword = ((text) => {
-         setauth((prevState) => ({ ...prevState, password: text }))        
+         setState((prevState) => ({ ...prevState, password: text }))        
     });
     
     useEffect(()=> {
-        console.log(auth);
+        console.log(state);
     })
     const dispatch = useDispatch();
     
@@ -45,7 +45,7 @@ export const RegistrationScreen = ({ navigation }) => {
         setIsShowKeyboard(false);
         Keyboard.dismiss();
 
-        dispatch(authSignUpUser(auth));
+        dispatch(authSignUpUser(state));
         //setstate(initialState);
         navigation.navigate("Home")
     };
@@ -70,7 +70,7 @@ export const RegistrationScreen = ({ navigation }) => {
                             <TextInput
                                 style={styles.input} textAlign={"center"}
                                 placeholder="LOGIN"
-                                value={auth.nickname}
+                                value={state.login}
                                 onChangeText={inputHandlerLogin}
                                 onFocus={() => setIsShowKeyboard(true)}/>
                         </KeyboardAvoidingView>
@@ -81,7 +81,7 @@ export const RegistrationScreen = ({ navigation }) => {
                             >
                         <TextInput placeholder="EMAIL"
                             style={styles.input} textAlign={"center"}
-                            value={auth.email}
+                            value={state.email}
                                 onChangeText={inputHandlerEmail}
                                 onFocus={() => setIsShowKeyboard(true)}/>
                     </KeyboardAvoidingView>    
@@ -93,7 +93,7 @@ export const RegistrationScreen = ({ navigation }) => {
                         <TextInput placeholder="PASSWORD"
                             style={styles.input} textAlign={"center"}
                             secureTextEntry={!showPassword}
-                            value={auth.password}
+                            value={state.password}
                             onChangeText={inputHandlerPassword}
                             onFocus={() => setIsShowKeyboard(true)}/>
                              <View style={styles.CheckBox}>

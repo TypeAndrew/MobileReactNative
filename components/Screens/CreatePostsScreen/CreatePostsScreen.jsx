@@ -15,11 +15,11 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 import { collection, addDoc } from "firebase/firestore";
 import { useRoute } from "../../../router"; 
-import  db  from "../../../firebase/config";
+import { db, storage } from "../../../firebase/config";
 import { getDownloadURL, ref, uploadBytes, getStorage } from "firebase/storage";
 import { getAuth} from "firebase/auth";
 import { useSelector } from "react-redux";
-import { selectUserId, selectLogin } from "../../../redux/selactors";
+import { selectUserId, selectLogin, selectState } from "../../../redux/selactors";
 
 export function CreatePostsScreen({navigation}) {
 
@@ -33,7 +33,9 @@ export function CreatePostsScreen({navigation}) {
     
     const routing = useRoute(true);
     console.log("111111111111--");
-      const userId = useSelector(selectUserId);
+    const userId = useSelector(selectUserId);
+    const statex = useSelector(selectState);
+    console.log("statex222222222222--"+JSON.stringify(statex));
     console.log("22222222222222222--"+userId);
     const login = useSelector(selectLogin);
     console.log("33333333333333333"+login);
@@ -74,14 +76,14 @@ export function CreatePostsScreen({navigation}) {
          const response = await fetch(photo.picture);
          console.log("00000000000111111111111");
         const file = await response.blob();
-        
+         console.log("000000000002222222222");
         const uniquePostId = Date.now().toString();
       
-         const auth =  getAuth(db);
+         //const auth =  getAuth(db);
           console.log("1111111111111111"+JSON.stringify(file));
-         const token = await auth.idToken;
+         //const token = await auth.idToken;
          console.log("22222222222222222");
-         const storage = getStorage(token);
+         //const storage = getStorage(token);
          console.log("3333333333333333"+JSON.stringify(storage));
          const storageRef = ref(storage, `postImage/${uniquePostId}`);
          console.log("444444444444444"+JSON.stringify(storageRef));
@@ -95,14 +97,15 @@ export function CreatePostsScreen({navigation}) {
     };
 
     const uploadPostToServer = async () => {
-    const photo = await uploadPhotoToServer();
+    photo.picture = await uploadPhotoToServer();
 
     try {
       const title = photo?.title; 
-      const picture =  photo?.picture;  
+      const picture = photo?.picture;  
+      console.log("((((((((((((((((("+db+"))))))))))"+photo?.picture)  
       const docRef = await addDoc(collection(db, "posts"), {
         userId,
-        login,
+        email,
         location,
         picture,
         title,
@@ -263,7 +266,7 @@ const styles = StyleSheet.create({
        
        
 
-        border: '1px solid #E8E8E8'
+       // border: '1px solid #E8E8E8'
     },
     btn: {
         

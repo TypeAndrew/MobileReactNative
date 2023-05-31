@@ -8,9 +8,10 @@ import {
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { authSignInUser } from "../../../redux/auth/authOperations";
+import { authSignInUser,authStateCahngeUser } from "../../../redux/auth/authOperations";
 
 const initialState = {
+  login: "",
   email: "",
   password: "",
 };
@@ -43,8 +44,9 @@ export const LoginScreen = ({ navigation }) =>{
         console.log("click");
         setIsShowKeyboard(false);
         Keyboard.dismiss();
-        const succsess = dispatch(authSignInUser(state,navigation));
-        console.log(succsess);
+        console.log(JSON.stringify(state))
+        dispatch(authSignInUser(state));
+   
         setstate(initialState);
         navigation.navigate("Profile")
     }

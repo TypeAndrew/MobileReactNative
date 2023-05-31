@@ -33,16 +33,15 @@ function BottomNavigation(shouldSwapScreens ) {
   const toggleOrder = () => {
     setIsOrderReversed(!isOrderReversed);
     };  
-   // console.log("111111111-  "+isOrderReversed ); 
-  console.log("111111111-  "+shouldSwapScreens );
+ 
+      // console.log("111111111-  "+shouldSwapScreens );
        return (<MainTab.Navigator
           screenOptions={({ route,navigation }) => ({
           tabBarStyle: { height: 83, },
           headerShown: false,
           showLabel: false,
           tabBarIcon: ({ focused, tintColor }) => {
-             // console.log("1) " + route.name);  
-             // console.log("2) "+route.params); 
+            
           let iconName = "";
           let routePath = ""; 
           let showIcon = false;  
@@ -139,9 +138,10 @@ function BottomNavigation(shouldSwapScreens ) {
        )
 };
 
-export const useRoute = (isAuth) => {
+
+export const useRoute = () => {
  
- 
+  
   return (
 
     <AuthStack.Navigator>

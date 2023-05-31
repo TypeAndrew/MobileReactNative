@@ -27,14 +27,14 @@ export const PostsScreen = ({ route, navigation }) => {
    
     navigation.navigate("Map",  latitude );
     console.log("latitude", latitude);
-    //console.log("longitude", longitude);
+
   };
 
   const openComments = (latitude) => {
    
     navigation.navigate("Comment", route )
     console.log("route", route);
-    //console.log("longitude", longitude);
+
   };
   
   return (

@@ -1,15 +1,10 @@
-<script src="http://localhost:8097"></script>
-
-import React, { useState, useEffect, StyleSheet } from "react";
-import {} from "react-native";
-
-import { NavigationContainer} from "@react-navigation/native";
-import { useRoute } from "./router";
+import React from "react";
 import { useFonts } from 'expo-font';
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Main } from "./components/Main";
-export default function App() {
+
+export default () => {
    
   const [fontsLoaded] = useFonts({
     'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
@@ -20,7 +15,7 @@ export default function App() {
   }
  
 
-  const routing = useRoute(true);
+
    
   
 

@@ -1,4 +1,4 @@
-import  db  from "../../firebase/config";
+import  app  from "../../firebase/config";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -9,52 +9,62 @@ import {
   
 } from 'firebase/auth';
 
+import { authSlice } from "./authReducer";
 
-export const authSignUpUser = ({ email, password, nickname }, navigation) => async (
+const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
+
+export const authSignUpUser = ({ email, password, login }) => async (
   dispatch,
   getSatte
 ) => {
-  console.log("email, password, nickname1", email, password, nickname);
-  console.log("db", db);
+  console.log("email, password, nickname", email, password, login);
+  console.log("app", app);
 
-  const auth = getAuth(db);
+  const auth = getAuth(app);
     console.log(auth);
 
   try {
    
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    console.log("user", user);
-    navigation.navigate("Home");
-  } catch (error) {
-    console.log("error", error);
-    console.log("error.message", error.message);
-  }
-};
-
-export const authSignInUser = ({ email, password }, navigation) => async (
-  dispatch,
-  getState
-) => {
-
-  const auth = getAuth(db);
-
-  try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-     updateProfile(auth.currentUser, {
+    await createUserWithEmailAndPassword(auth, email, password);
+    console.log(login);
+    await updateProfile(auth.currentUser, {
         displayName: login,
-        email,
+     
       });
-
-    navigation.navigate("Home");
-    console.log("user", user);
+     console.log("--" + JSON.stringify(auth.currentUser));
+   // navigation.navigate("Home");
   } catch (error) {
     console.log("error", error);
-    console.log("error.code", error.code);
     console.log("error.message", error.message);
-    return;
   }
 };
 
+export const authSignInUser =
+  ({ email, password }) =>
+  async (dispatch) => {
+    try {
+      const auth = getAuth(app);
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log("user", auth.currentUser);
+      if (user) {
+        console.log('-------------------------->>>>>>>>>');
+        dispatch(
+          updateUserProfile({
+            userId: auth.currentUser.uid,
+            login:  auth.currentUser.displayName,
+            email:  auth.currentUser.email,
+          })
+        );
+
+        dispatch(authStateChange({ stateChange: true }));
+      }
+    } catch (error) {
+      console.log("error", error);
+      console.log("error.code", error.code);
+      console.log("error.message", error.message);
+    }
+    };
+  
 export const authSignOutUser = ( navigation) => async (dispatch, getState) => {
 
   const auth = getAuth();
