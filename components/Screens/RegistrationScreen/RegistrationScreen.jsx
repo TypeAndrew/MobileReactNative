@@ -45,9 +45,9 @@ export const RegistrationScreen = ({ navigation }) => {
         setIsShowKeyboard(false);
         Keyboard.dismiss();
 
-        dispatch(authSignUpUser(state));
-        //setstate(initialState);
-        navigation.navigate("Home")
+        dispatch(authSignUpUser(state,navigation));
+        setstate(initialState);
+       // navigation.navigate("Home")
     };
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  

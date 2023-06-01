@@ -45,10 +45,10 @@ export const LoginScreen = ({ navigation }) =>{
         setIsShowKeyboard(false);
         Keyboard.dismiss();
         console.log(JSON.stringify(state))
-        dispatch(authSignInUser(state));
+        dispatch(authSignInUser(state,navigation));
    
         setstate(initialState);
-        navigation.navigate("Profile")
+       // navigation.navigate("Profile")
     }
     
     return (
