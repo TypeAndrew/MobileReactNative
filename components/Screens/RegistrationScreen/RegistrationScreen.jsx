@@ -46,7 +46,7 @@ export const RegistrationScreen = ({ navigation }) => {
         Keyboard.dismiss();
 
         dispatch(authSignUpUser(state,navigation));
-        setstate(initialState);
+        setState(initialState);
        // navigation.navigate("Home")
     };
     return (
